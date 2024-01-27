@@ -23,7 +23,6 @@ migrate_working_dir/
 
 # Flutter/Dart/Pub related
 **/doc/api/
-**/ios/Flutter/.last_build_id
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
@@ -41,3 +40,14 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Ignore unnecessary files for Android, iOS, Mac, Windows, Linux, and Web
+**/android/
+**/ios/
+**/mac/
+**/windows/
+**/linux/
+**/web/
+
+# Keep YAML files from project, assets, and test folders
+!**/*.yaml
