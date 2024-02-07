@@ -9,6 +9,7 @@
 .history
 .svn/
 migrate_working_dir/
+macos/
 
 # IntelliJ related
 *.iml
@@ -51,3 +52,7 @@ app.*.map.json
 
 # Keep YAML files from project, assets, and test folders
 !**/*.yaml
+macos/Podfile
+macos/Flutter/Flutter-Debug.xcconfig
+macos/Flutter/Flutter-Release.xcconfig
+macos/Flutter/GeneratedPluginRegistrant.swift
