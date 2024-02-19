@@ -20,6 +20,10 @@ class ApiProvider implements ApiCalls {
       var response = await _dio.get(url, options: Options(headers: headers));
       return Right(response.data);
     } catch (e) {
+      if (e is DioException) {
+        return Left(e.message.toString());
+      }
+
       return Left(e.toString());
     }
   }

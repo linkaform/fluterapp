@@ -56,3 +56,7 @@ macos/Podfile
 macos/Flutter/Flutter-Debug.xcconfig
 macos/Flutter/Flutter-Release.xcconfig
 macos/Flutter/GeneratedPluginRegistrant.swift
+
+creds.txt
+
+.vscode/launch.json

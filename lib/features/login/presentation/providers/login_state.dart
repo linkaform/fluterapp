@@ -3,7 +3,7 @@ class LoginState {
   final String? error;
 
   LoginState({
-    this.isLoading = true,
+    this.isLoading = false,
     this.error,
   });
 

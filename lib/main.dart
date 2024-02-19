@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:linkaform/core/common/config/app_shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/common/core_exports.dart';
 
 void main() {
-  runApp(const ProviderScope(child: MyApp()));
+  WidgetsFlutterBinding.ensureInitialized();
+  Future.wait([
+    SharedPreferences.getInstance(),
+  ]).then((value) => runApp(
+        ProviderScope(
+          overrides: [
+            sharedPreferencesProvider.overrideWithValue(value[0]),
+          ],
+          child: const MyApp(),
+        ),
+      ));
 }
 
 class MyApp extends ConsumerWidget {
@@ -14,7 +26,7 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
       theme: AppTheme.themeData,
-      routerDelegate: ref.read(appRouterProvider).routerDelegate,
+      routerConfig: ref.read(appRouterProvider),
     );
   }
 }

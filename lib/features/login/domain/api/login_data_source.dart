@@ -8,5 +8,5 @@ final loginDataSourceProvider = Provider<LoginDataSource>((ref) {
 });
 
 abstract class LoginDataSource {
-  Future<void> login(String username, String password);
+  Future<dynamic> login(String username, String password);
 }
