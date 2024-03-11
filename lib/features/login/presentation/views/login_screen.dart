@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkaform/core/common/pages.dart';
 
 import '../../../../core/common/config/app_router.dart';
-import '../../domain/entities/login.dart';
 import '../providers/login_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -15,7 +14,6 @@ class LoginScreen extends ConsumerStatefulWidget {
 
 class LoginScreenState extends ConsumerState<LoginScreen> {
   var _isPasswordVisible = true;
-  var _isLoading = false;
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -29,6 +27,32 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(loginNotifierProvider);
+    ref.listen(loginNotifierProvider, (previous, next) {
+      next.loginSuccess
+          ? ScaffoldMessenger.of(context)
+              .showSnackBar(
+                const SnackBar(
+                  content: Text('Login successful'),
+                  backgroundColor: Colors.green,
+                ),
+              )
+              .closed
+              .then((reason) async {
+              await ref
+                  .read(appRouterProvider)
+                  .pushReplacement(HomeScreen.path);
+            })
+          : next.error != null
+              ? ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(next.error!),
+                    backgroundColor: Colors.red,
+                  ),
+                )
+              : null;
+    });
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -87,36 +111,17 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
               ),
             ),
-            _isLoading ? const CircularProgressIndicator() : OutlinedButton(
-              onPressed: () async {
+            state.isLoading
+                ? const CircularProgressIndicator()
+                : OutlinedButton(
+                    onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                         content: Text('Validating credentials...')),
                   );
-                 ref.read(loginProvider(LoginCredentials(username: _emailController.text, password: _passwordController.text)))
-                     .when(data: (data) {
-                       setState(() {
-                         _isLoading = false;
-                       });
-
-                       ScaffoldMessenger.of(context).showSnackBar(
-                         const SnackBar(
-                           content: Text('Login successful'),
-                           backgroundColor: Colors.green,
-                         ),
-                       );
-                       ref.read(appRouterProvider).pushReplacement(HomeScreen.path);
-
-                 }, error: (error, _) => ScaffoldMessenger.of(context).showSnackBar(
-                   SnackBar(
-                     content: Text('Error: $error'),
-                     backgroundColor: Colors.red,
-                   ),
-                 ), loading: () => setState(() {
-                   _isLoading = true;
-                 }));
-                }
+                        _login();
+                      }
               },
               child: const Text('Login'),
             ),
@@ -130,5 +135,9 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
   void showPassword() =>
       setState(() => _isPasswordVisible = !_isPasswordVisible);
 
-  
+  Future<void> _login() async {
+    await ref
+        .watch(loginNotifierProvider.notifier)
+        .login(_emailController.text, _passwordController.text);
+  }
 }

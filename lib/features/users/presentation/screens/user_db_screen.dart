@@ -35,10 +35,22 @@ class UserDBScreenState extends ConsumerState<UserDBScreen> {
 
   Widget listTileDoc({required Map<String, dynamic> data}) {
     return ListTile(
-      title: Text('ID: ${data['id']}', maxLines: 1, softWrap: true, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12)),
-      trailing: Text('Rev: ${data['value']['rev']}', maxLines: 1, softWrap: true, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12)),
-      subtitle: Text('Key: ${data['key']}', maxLines: 1, softWrap: true, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12),)
-
-    );
+        title: Text('ID: ${data['id']}',
+            maxLines: 1,
+            softWrap: true,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontSize: 12)),
+        trailing: Text('Rev: ${data['value']['rev']}',
+            maxLines: 1,
+            softWrap: true,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontSize: 12)),
+        subtitle: Text(
+          'Key: ${data['key']}',
+          maxLines: 1,
+          softWrap: true,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(fontSize: 12),
+        ));
   }
 }
