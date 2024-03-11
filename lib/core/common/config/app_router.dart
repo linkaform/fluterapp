@@ -1,27 +1,32 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../features/users/presentation/screens/user_db_screen.dart';
 import '../pages.dart';
 import 'app_shared_preferences.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
+  final sharedPreferences = ref.read(sharedPreferencesProvider);
+  final isLoggedIn = sharedPreferences.getStringList('credentials') ?? [];
   return GoRouter(
+    initialLocation: isLoggedIn.isEmpty ? '/' : HomeScreen.path,
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) {
-          final sharedPreferences = ref.read(sharedPreferencesProvider);
-          final isLoggedIn = sharedPreferences.getBool('isLoggedIn') ?? false;
-          if (isLoggedIn) {
-            return const HomeScreen();
-          } else {
-            return const LoginScreen();
-          }
-        },
+        builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
-        path: '/home',
+        path: HomeScreen.path,
         builder: (context, state) => const HomeScreen(),
+        routes: [
+          GoRoute(
+            path: 'user_db/:db',
+            name: 'user_db',
+            builder: (context, state) => UserDBScreen(
+              dbName: state.pathParameters['db'] ?? '',
+            ),
+          ),
+        ],
       ),
     ],
   );

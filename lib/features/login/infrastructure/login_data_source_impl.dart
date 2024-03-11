@@ -7,7 +7,7 @@ class LoginDataSourceImpl implements LoginDataSource {
   LoginDataSourceImpl({required this.repository});
 
   @override
-  Future<void> login(String username, String password) async {
+  Future<dynamic> login(String username, String password) async {
     repository.login(username, password);
   }
 }

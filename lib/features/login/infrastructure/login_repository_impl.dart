@@ -1,16 +1,23 @@
 import 'package:dartz/dartz.dart';
-
-import '../../../core/rest_config/api_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wilt/wilt.dart';
 import '../domain/api/login_repository.dart';
 
 class LoginRepositoryImpl implements LoginRepository {
-  final ApiProvider apiProvider;
-  LoginRepositoryImpl({required this.apiProvider});
+  final SharedPreferences sharedPreferences;
+
+  LoginRepositoryImpl({required this.sharedPreferences});
 
   @override
-  Future<Either<String, dynamic>> login(
+  Future<Either<WiltException, dynamic>> login(
       String username, String password) async {
-    return await apiProvider
-        .get('http://$username:$password@cdb.linkaform.com:5984/_users/');
+    try {
+      final client = Wilt('cdb.linkaform.com');
+      client.login(username, password);
+      final response = await client.getSession().then((value) => sharedPreferences.setStringList('credentials', [username, password]));
+      return Right(response);
+    } catch (e) {
+      return Left(WiltException(e.toString()));
+    }
   }
 }

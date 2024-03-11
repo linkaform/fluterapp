@@ -26,7 +26,7 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
       theme: AppTheme.themeData,
-      routerConfig: ref.read(appRouterProvider),
+      routerConfig: ref.watch(appRouterProvider),
     );
   }
 }
