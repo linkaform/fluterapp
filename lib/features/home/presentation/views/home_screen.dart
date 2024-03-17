@@ -28,7 +28,9 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: Text(success[index]),
-                        onTap: () => ref.read(appRouterProvider).pushNamed('user_db', pathParameters: {'db': success[index]}),
+                        onTap: () => ref.read(appRouterProvider).pushNamed(
+                            'user_db',
+                            pathParameters: {'db': success[index]}),
                       );
                     },
                   ),
