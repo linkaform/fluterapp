@@ -4,10 +4,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
   final sharedPreferences = ref.read(sharedPreferencesProvider);
   final isLoggedIn = sharedPreferences.getStringList('credentials') ?? [];
   return GoRouter(
-    initialLocation: isLoggedIn.isEmpty ? '/' : HomeScreen.path,
+    initialLocation: isLoggedIn.isEmpty ? LoginScreen.path : HomeScreen.path,
     routes: [
       GoRoute(
-        path: '/',
+        path: LoginScreen.path,
         builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
@@ -15,9 +15,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const HomeScreen(),
         routes: [
           GoRoute(
-            path: 'user_db/:db',
-            name: 'user_db',
-            builder: (context, state) => UserDBScreen(
+            path: DatabaseDocsScreen.path,
+            name: DatabaseDocsScreen.name,
+            builder: (context, state) => DatabaseDocsScreen(
               dbName: state.pathParameters['db'] ?? '',
             ),
           ),

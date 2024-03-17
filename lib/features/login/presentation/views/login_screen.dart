@@ -6,6 +6,8 @@ import '../../../../core/common/config/app_router.dart';
 import '../providers/login_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
+  static String path = '/';
+
   const LoginScreen({super.key});
 
   @override
@@ -115,16 +117,16 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                 ? const CircularProgressIndicator()
                 : OutlinedButton(
                     onPressed: () async {
-                if (_formKey.currentState!.validate()) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text('Validating credentials...')),
-                  );
+                      if (_formKey.currentState!.validate()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Validating credentials...')),
+                        );
                         _login();
                       }
-              },
-              child: const Text('Login'),
-            ),
+                    },
+                    child: const Text('Login'),
+                  ),
             const SizedBox(height: 20),
           ],
         ),

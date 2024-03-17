@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkaform/features/db_docs/presentation/providers/get_db_docs_provider.dart';
 
-class UserDBScreen extends ConsumerStatefulWidget {
-  static String path = '/user_db';
+class DatabaseDocsScreen extends ConsumerStatefulWidget {
+  static String path = 'user_db/:db';
+  static String name = 'user_db';
+
   final String dbName;
-  const UserDBScreen({super.key, required this.dbName});
+  const DatabaseDocsScreen({super.key, required this.dbName});
 
   @override
-  UserDBScreenState createState() => UserDBScreenState();
+  UDatabaseDocsScreenState createState() => UDatabaseDocsScreenState();
 }
 
-class UserDBScreenState extends ConsumerState<UserDBScreen> {
+class UDatabaseDocsScreenState extends ConsumerState<DatabaseDocsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
