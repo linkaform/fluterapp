@@ -1,9 +1,4 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-
-import '../../../features/users/presentation/screens/user_db_screen.dart';
-import '../pages.dart';
-import 'app_shared_preferences.dart';
+import '../core_exports.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   final sharedPreferences = ref.read(sharedPreferencesProvider);

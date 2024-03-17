@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:linkaform/features/users/presentation/providers/get_db_docs_provider.dart';
-
+import 'package:linkaform/features/db_docs/presentation/providers/get_db_docs_provider.dart';
 
 class UserDBScreen extends ConsumerStatefulWidget {
   static String path = '/user_db';
@@ -17,18 +16,18 @@ class UserDBScreenState extends ConsumerState<UserDBScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('USER DB Screen'),
+          title: const Text('DB docs screen'),
         ),
         body: ref.watch(getDBDocsProvider(widget.dbName)).when(
             data: (data) => data.fold(
                   (l) => null,
                   (success) => ListView.builder(
-                itemCount: success.length,
-                itemBuilder: (context, index) {
-                  return listTileDoc(data: success[index]);
-                },
-              ),
-            ),
+                    itemCount: success.length,
+                    itemBuilder: (context, index) {
+                      return listTileDoc(data: success[index]);
+                    },
+                  ),
+                ),
             error: (error, _) => Text(error.toString()),
             loading: () => const CircularProgressIndicator()));
   }

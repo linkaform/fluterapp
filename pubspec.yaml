@@ -20,6 +20,7 @@ dependencies:
   json_object_lite: ^4.0.1
   go_router: ^13.0.1
   shared_preferences: ^2.2.2
+  flutter_foreground_task: ^6.1.3
 dev_dependencies:
   flutter_lints: ^3.0.1
   flutter_test:
