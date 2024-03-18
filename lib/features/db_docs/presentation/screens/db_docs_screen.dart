@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:linkaform/core/common/core_exports.dart';
 import 'package:linkaform/features/db_docs/presentation/providers/get_db_docs_provider.dart';
 
 class DatabaseDocsScreen extends ConsumerStatefulWidget {
@@ -10,10 +10,10 @@ class DatabaseDocsScreen extends ConsumerStatefulWidget {
   const DatabaseDocsScreen({super.key, required this.dbName});
 
   @override
-  UDatabaseDocsScreenState createState() => UDatabaseDocsScreenState();
+  DatabaseDocsScreenState createState() => DatabaseDocsScreenState();
 }
 
-class UDatabaseDocsScreenState extends ConsumerState<DatabaseDocsScreen> {
+class DatabaseDocsScreenState extends ConsumerState<DatabaseDocsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,8 +35,8 @@ class UDatabaseDocsScreenState extends ConsumerState<DatabaseDocsScreen> {
   }
 
   Widget listTileDoc({required Map<String, dynamic> data}) {
-    return ListTile(
-        title: Text('ID: ${data['id']}',
+    return ExpansionTile(
+      title: Text('ID: ${data['id']}',
             maxLines: 1,
             softWrap: true,
             overflow: TextOverflow.ellipsis,
@@ -52,6 +52,16 @@ class UDatabaseDocsScreenState extends ConsumerState<DatabaseDocsScreen> {
           softWrap: true,
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(fontSize: 12),
-        ));
+      ),
+      children: [
+        OutlinedButton(
+          onPressed: () => ref.read(appRouterProvider).pushNamed(
+            CouchDbDocWidget.name,
+            pathParameters: {'db': widget.dbName, 'docId': data['id']},
+          ),
+          child: const Text('See data'),
+        ),
+      ],
+    );
   }
 }

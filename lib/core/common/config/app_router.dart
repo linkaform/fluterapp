@@ -20,6 +20,16 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) => DatabaseDocsScreen(
               dbName: state.pathParameters['db'] ?? '',
             ),
+            routes: [
+              GoRoute(
+                path: CouchDbDocWidget.path,
+                name: CouchDbDocWidget.name,
+                builder: (context, state) => CouchDbDocWidget(
+                  dbName: state.pathParameters['db'] ?? '',
+                  docId: state.pathParameters['docId'] ?? '',
+                ),
+              ),
+            ],
           ),
         ],
       ),

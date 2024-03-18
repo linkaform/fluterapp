@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:linkaform/core/common/config/app_router.dart';
 
+import '../../../../core/common/core_exports.dart';
 import '../providers/home_provider.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -29,7 +28,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                       return ListTile(
                         title: Text(success[index]),
                         onTap: () => ref.read(appRouterProvider).pushNamed(
-                            'user_db',
+                            DatabaseDocsScreen.name,
                             pathParameters: {'db': success[index]}),
                       );
                     },

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
@@ -31,7 +32,6 @@ class ApiProvider implements ApiCalls {
 
   Future<Either<String, List<dynamic>>> getAllDatabases() async {
     try {
-      /// Todo: listen the changes in each db to update and retrieve replication status
       _wilt.login(_credentials.username, _credentials.password);
       final response = await _wilt.getAllDbs();
       final values =  jsonDecode(response['jsonCouchResponse'].toString());
@@ -62,5 +62,30 @@ class ApiProvider implements ApiCalls {
 
       return Left(e.toString());
     }
+  }
+
+  Future<Either<String, Map<String, dynamic>>> getDocData(
+      String url, String docId,
+      {Map<String, String>? headers}) async {
+    try {
+      _wilt.login(_credentials.username, _credentials.password);
+      _wilt.db = url;
+      final response = await _wilt.getDocument(docId);
+      final values = jsonDecode(response['jsonCouchResponse'].toString());
+      return Right(values);
+    } catch (e) {
+      if (e is DioException) {
+        return Left(e.message.toString());
+      }
+
+      return Left(e.toString());
+    }
+  }
+
+  Wilt getClientInstance(String databaseName) {
+    _wilt.login(_credentials.username, _credentials.password);
+    _wilt.db = databaseName;
+    _wilt.startChangeNotification();
+    return _wilt;
   }
 }
