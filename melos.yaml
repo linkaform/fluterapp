@@ -1,0 +1,5 @@
+name: lkf_monorepo
+
+packages:
+  - apps/**
+  - packages/** 

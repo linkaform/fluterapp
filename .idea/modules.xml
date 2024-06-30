@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/apps/linkaform_2.0/melos_linkaform.iml" filepath="$PROJECT_DIR$/apps/linkaform_2.0/melos_linkaform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/melos_lkf_monorepo.iml" filepath="$PROJECT_DIR$/melos_lkf_monorepo.iml" />
+    </modules>
+  </component>
+</project>
