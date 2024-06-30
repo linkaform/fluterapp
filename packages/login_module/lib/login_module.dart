@@ -1,4 +1,4 @@
-/// A Very Good Project created by Very Good CLI.
+/// Login module for every lkf app into our monorepo.
 library;
 
-export 'src/login_module.dart';
+//export 'src/login_module.dart';
