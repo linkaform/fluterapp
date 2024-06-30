@@ -1,4 +1,7 @@
-.dart_tool/package_config.json
+.dart_tool
+
 
 /// Exclude
 !pubspec.yaml
+!melos.yaml
+
