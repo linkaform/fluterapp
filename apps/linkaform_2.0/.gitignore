@@ -38,10 +38,10 @@ app.*.symbols
 app.*.map.json
 
 # Ignore unnecessary files for Android, iOS, Mac, Windows, Linux, and Web
-**/mac/
-**/windows/
-**/linux/
-**/web/
+mac/
+windows/
+linux/
+web/
 
 # Keep YAML files from project, assets, and test folders
 !**/*.yaml
