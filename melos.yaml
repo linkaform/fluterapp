@@ -5,6 +5,21 @@ packages:
   - packages/**
 
 scripts:
-  gen:
-    exec: dart run build_runner build --delete-conflicting-outputs && flutter gen-l10n
+  nuke:
+    exec: flutter clean && melos clean_generated_files
+    description: Clean the project
+
+  clean_generated_files:
+    exec: rm -rf assets/l10n/*.dart && rm -rf lib/gen/*
+
+  initial_run:
+    exec: melos bs && melos gen_text && melos gen_assets
+    description: Generating assets from packages
+
+  gen_assets:
+    exec: dart run build_runner build
+    description: Generating assets from packages
+
+  gen_text:
+    exec: flutter gen-l10n
     description: Generating assets from packages
