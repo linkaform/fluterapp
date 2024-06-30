@@ -2,4 +2,9 @@ name: lkf_monorepo
 
 packages:
   - apps/**
-  - packages/** 
+  - packages/**
+
+scripts:
+  gen:
+    exec: dart run build_runner build --delete-conflicting-outputs && flutter gen-l10n
+    description: Generating assets from packages
