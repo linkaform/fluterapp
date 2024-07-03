@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:login_module/login/presentation/providers/translations_provider.dart';
+import 'package:login_module/login/presentation/widget_validators/login_validators.dart';
+import '../providers/login_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({super.key});
+  static String path = '/login';
+  final Function() onResultFunction;
+
+  const LoginScreen({
+    super.key,
+    required this.onResultFunction,
+  });
 
   @override
   LoginScreenState createState() => LoginScreenState();
@@ -23,22 +32,27 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizationText = ref.watch(translationsProvider);
+
     final state = ref.watch(loginNotifierProvider);
-    ref.listen(loginNotifierProvider, (previous, next) {
-      next.loginSuccess
-          ? ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Login successful'),
-                backgroundColor: Colors.green,
-              ),
-            )
-          : ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(next.error ?? ''),
-                backgroundColor: Colors.red,
-              ),
-            );
-    });
+    if (state.loginSuccess) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(
+            SnackBar(
+              content: Text(localizationText.successfully_message),
+              backgroundColor: Colors.green,
+            ),
+          )
+          .closed
+          .then((_) => widget.onResultFunction());
+    } else if (state.error != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${localizationText.failure_message} : ${state.error}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
 
     return Scaffold(
       body: Center(
@@ -66,20 +80,18 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                   children: [
                     TextFormField(
                       controller: _emailController,
-                      decoration: const InputDecoration(
-                        labelText: 'Email',
+                      decoration: InputDecoration(
+                        labelText: FieldType.Email.name,
                         border: OutlineInputBorder(),
                       ),
-                      validator: (value) => value == null || value.isEmpty
-                          ? 'Please enter your email address'
-                          : null,
+                      validator: (_) => validateValue(_, FieldType.Email),
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
                       controller: _passwordController,
                       obscureText: _isPasswordVisible,
                       decoration: InputDecoration(
-                        labelText: 'Password',
+                        labelText: FieldType.Password.name,
                         border: const OutlineInputBorder(),
                         suffixIcon: IconButton(
                           icon: Icon(
@@ -90,9 +102,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                           onPressed: () => showPassword(),
                         ),
                       ),
-                      validator: (value) => value == null || value.isEmpty
-                          ? 'Please enter your password'
-                          : null,
+                      validator: (_) => validateValue(_, FieldType.Password),
                     ),
                   ],
                 ),
@@ -101,16 +111,18 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
             state.isLoading
                 ? const CircularProgressIndicator()
                 : OutlinedButton(
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
+                    onPressed: () {
+                      if (_formKey.currentState?.validate() != null) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Validating credentials...')),
+                          SnackBar(
+                            content: Text(localizationText
+                                .validating_credentials_message),
+                          ),
                         );
-                        _login();
+                        _login;
                       }
                     },
-                    child: const Text('Login'),
+                    child: Text(localizationText.login_button_text),
                   ),
             const SizedBox(height: 20),
           ],

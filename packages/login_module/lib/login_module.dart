@@ -1,4 +1,5 @@
 /// Login module for every lkf app into our monorepo.
 library;
 
-//export 'src/login_module.dart';
+export 'login/presentation/providers/login_provider.dart';
+export 'login/presentation/views/login_screen.dart';
