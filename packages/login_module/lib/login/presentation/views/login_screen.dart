@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:login_module/login/presentation/providers/translations_provider.dart';
-import 'package:login_module/login/presentation/widget_validators/login_validators.dart';
+import 'package:login_module/core/utils/login_validators.dart';
 import '../providers/login_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -32,14 +31,12 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final localizationText = ref.watch(translationsProvider);
-
     final state = ref.watch(loginNotifierProvider);
     if (state.loginSuccess) {
       ScaffoldMessenger.of(context)
           .showSnackBar(
             SnackBar(
-              content: Text(localizationText.successfully_message),
+              content: Text('localizationText.successfully_message'),
               backgroundColor: Colors.green,
             ),
           )
@@ -48,7 +45,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
     } else if (state.error != null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('${localizationText.failure_message} : ${state.error}'),
+          content: Text('"ocalizationText.failure_message" ${state.error}'),
           backgroundColor: Colors.red,
         ),
       );
@@ -115,14 +112,14 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                       if (_formKey.currentState?.validate() != null) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text(localizationText
-                                .validating_credentials_message),
+                            content: Text(
+                                'localizationText.validating_credentials_message'),
                           ),
                         );
                         _login;
                       }
                     },
-                    child: Text(localizationText.login_button_text),
+                    child: Text('localizationText.login_button_text'),
                   ),
             const SizedBox(height: 20),
           ],

@@ -19,7 +19,3 @@ scripts:
   gen_assets:
     exec: dart run build_runner build
     description: Generating assets from packages
-
-  gen_text:
-    exec: flutter gen-l10n
-    description: Generating assets from packages

@@ -1,9 +1,0 @@
-{
-    "login_button_text" : "Login",
-    "successfully_message" : "Inicio de sesión exitoso!",
-    "failure_message" : "Ocurrió un error al iniciar sesión: ",
-    "validating_credentials_message" : "Validadando credenciales...",
-    "enter_email_error_message" : "Por favor ingresa tu correo electrónico",
-    "enter_password_error_message" : "Por favor ingresa tu contraseña"
-
-}

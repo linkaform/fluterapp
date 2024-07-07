@@ -1,0 +1,11 @@
+{
+  "@@locale": "es",
+  "linkaformAppTitle": "Linkaform",
+  "enterEmailErrorMessage": "Por favor ingresa un correo electrónico",
+  "enterPasswordErrorMessage": "Por favor ingresa una contraseña",
+  "missedPasswordLabel": "Olvidaste tu contraseña?",
+  "successfullyMessage": "Ingresaste a la aplicación exitosamente",
+  "failureMessage": "Ocurrió un error al ingresar a la aplicación:",
+  "validatingCredentialsMessage": "Validadando credenciales...",
+  "loginButtonText": "Login"
+}

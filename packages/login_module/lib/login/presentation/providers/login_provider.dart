@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_module/login/infrastructure/login_repository_impl.dart';
-import 'login_state.dart';
+import 'state/login_state.dart';
 
 final loginNotifierProvider = StateNotifierProvider<LoginNotifier, LoginState>(
   (ref) => LoginNotifier(repository: ref.read(loginRepositoryProvider)),
