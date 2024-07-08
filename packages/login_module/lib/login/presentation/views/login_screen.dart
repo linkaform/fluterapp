@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ui_look_and_feel_module/module_exports.dart';
 import '../providers/login_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
-  static String path = '/login';
-  final Function() onResultFunction;
+  static String path = '/';
+  static String name = 'login';
+  final String resultPath;
 
   const LoginScreen({
     super.key,
-    required this.onResultFunction,
+    required this.resultPath,
   });
 
   @override
@@ -31,7 +33,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
           .showSnackBar(buildSuccessSnackBar(
               translation.successfullyMessage, Colors.green))
           .closed
-          .then((_) => widget.onResultFunction());
+          .then((_) => context.push(widget.resultPath));
     } else if (state.error != null) {
       ScaffoldMessenger.of(context).showSnackBar(
           buildSuccessSnackBar(translation.failureMessage, Colors.red));

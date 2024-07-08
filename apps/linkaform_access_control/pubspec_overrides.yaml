@@ -1,5 +1,7 @@
-# melos_managed_dependency_overrides: translations_module,ui_look_and_feel_module
+# melos_managed_dependency_overrides: translations_module,ui_look_and_feel_module,login_module
 dependency_overrides:
+  login_module:
+    path: ../../packages/login_module
   translations_module:
     path: ../../packages/translations_module
   ui_look_and_feel_module:
