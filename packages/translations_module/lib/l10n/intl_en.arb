@@ -1,6 +1,8 @@
 {
   "@@locale": "en",
   "linkaformAppTitle": "Linkaform",
+  "emailLabel": "Email",
+  "passwordLabel" : "Password",
   "enterEmailErrorMessage": "Please enter an email",
   "enterPasswordErrorMessage": "Please enter a password",
   "missedPasswordLabel": "Did you miss the password?",
@@ -8,5 +10,6 @@
   "failureMessage": "Ops! There's an error when we try to login: ",
   "validatingMessage": "Validating $...",
   "credentialsLabel" : "Credentials",
+  "settingsLabel" : "Settings",
   "loginButtonText": "Login"
 }

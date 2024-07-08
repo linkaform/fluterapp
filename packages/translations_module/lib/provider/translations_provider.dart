@@ -8,7 +8,7 @@ import 'package:translations_module/generated/l10n.dart';
 /// This provider allows you to **change the translation language**
 /// into every app that use the texts from lkf context.
 final localeProvider = StateProvider<Locale>(
-  (ref) => Locale(Intl.systemLocale),
+  (ref) => Locale(Intl.getCurrentLocale()),
 );
 
 /// This class is the base to return the translations generated

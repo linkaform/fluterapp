@@ -60,6 +60,7 @@ class _MaterialAppContainerState extends ConsumerState<MaterialAppContainer> {
             state.translationDelegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: state.translationDelegate.supportedLocales,
           home: rootWidget,
@@ -92,7 +93,13 @@ class _MaterialAppContainerState extends ConsumerState<MaterialAppContainer> {
   }) {
     return MaterialApp(
       locale: locale,
-      localizationsDelegates: localizationsDelegates,
+      localizationsDelegates: localizationsDelegates ??
+          [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            S.delegate,
+          ],
       supportedLocales: supportedLocales ?? [Locale('es')],
       home: home,
     );

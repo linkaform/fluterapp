@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ui_look_and_feel_module/module_exports.dart';
 
 import '../../providers/form_validator_providers.dart';
 
@@ -23,6 +24,7 @@ class _LoginFormWidgetState extends ConsumerState<LoginFormWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final translations = ref.watch(translationWidgetStateProvider).translations;
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Form(
@@ -34,7 +36,7 @@ class _LoginFormWidgetState extends ConsumerState<LoginFormWidget> {
               child: TextFormField(
                 controller: widget.emailController,
                 decoration: InputDecoration(
-                  labelText: FieldType.Email.name,
+                  labelText: translations.emailLabel,
                   border: OutlineInputBorder(),
                 ),
                 validator: (_) => validateField(ref, _, FieldType.Email),
@@ -44,7 +46,7 @@ class _LoginFormWidgetState extends ConsumerState<LoginFormWidget> {
               controller: widget.passwordController,
               obscureText: _isPasswordVisible,
               decoration: InputDecoration(
-                labelText: FieldType.Password.name,
+                labelText: translations.passwordLabel,
                 border: const OutlineInputBorder(),
                 suffixIcon: IconButton(
                   icon: Icon(

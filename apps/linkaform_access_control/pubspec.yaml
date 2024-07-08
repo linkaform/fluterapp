@@ -15,9 +15,9 @@ dependencies:
   go_router: ^13.0.1
   intl: any
   ui_look_and_feel_module:
-    path: ../../packages/ui_look_and_feel_module
+    path: ../packages/ui_look_and_feel_module
   login_module:
-    path: ../../packages/login_module
+    path: ../packages/login_module
 
 dev_dependencies:
   build_runner: ^2.4.11

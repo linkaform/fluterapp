@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "credentialsLabel":
             MessageLookupByLibrary.simpleMessage("Credenciales"),
+        "emailLabel": MessageLookupByLibrary.simpleMessage("Correo"),
         "enterEmailErrorMessage": MessageLookupByLibrary.simpleMessage(
             "Por favor ingresa un correo electrónico"),
         "enterPasswordErrorMessage": MessageLookupByLibrary.simpleMessage(
@@ -34,6 +35,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "loginButtonText": MessageLookupByLibrary.simpleMessage("Login"),
         "missedPasswordLabel":
             MessageLookupByLibrary.simpleMessage("Olvidaste tu contraseña?"),
+        "passwordLabel": MessageLookupByLibrary.simpleMessage("Contraseña"),
+        "settingsLabel":
+            MessageLookupByLibrary.simpleMessage("Configuraciones"),
         "successfullyMessage": MessageLookupByLibrary.simpleMessage(
             "Ingresaste a la aplicación exitosamente"),
         "validatingMessage":

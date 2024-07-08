@@ -60,6 +60,26 @@ class S {
     );
   }
 
+  /// `Email`
+  String get emailLabel {
+    return Intl.message(
+      'Email',
+      name: 'emailLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get passwordLabel {
+    return Intl.message(
+      'Password',
+      name: 'passwordLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Please enter an email`
   String get enterEmailErrorMessage {
     return Intl.message(
@@ -113,7 +133,7 @@ class S {
   /// `Validating $...`
   String get validatingMessage {
     return Intl.message(
-      r'Validating $...',
+      'Validating \$...',
       name: 'validatingMessage',
       desc: '',
       args: [],
@@ -125,6 +145,16 @@ class S {
     return Intl.message(
       'Credentials',
       name: 'credentialsLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Settings`
+  String get settingsLabel {
+    return Intl.message(
+      'Settings',
+      name: 'settingsLabel',
       desc: '',
       args: [],
     );
