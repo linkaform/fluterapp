@@ -6,6 +6,7 @@
   "missedPasswordLabel": "Did you miss the password?",
   "successfullyMessage": "Login was successfully",
   "failureMessage": "Ops! There's an error when we try to login: ",
-  "validatingCredentialsMessage": "Validating credentials...",
+  "validatingMessage": "Validating $...",
+  "credentialsLabel" : "Credentials",
   "loginButtonText": "Login"
 }

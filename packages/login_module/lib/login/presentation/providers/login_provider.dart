@@ -13,6 +13,10 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
   Future<void> login(String username, String password) async {
     state = state.copyWith(isLoading: true);
+
+    /// Mocked Login
+    Future.delayed(
+        Duration(seconds: 2), () => state = state.copyWith(isLoading: false));
     // Future.wait([dataSource.login(username, password)]).then((value) {
     //   sharedPreferences.setStringList('credentials', [username, password]);
     //   state = state.copyWith(isLoading: false, loginSuccess: true);

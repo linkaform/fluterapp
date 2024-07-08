@@ -1,23 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/find_locale.dart';
 import 'package:translations_module/generated/l10n.dart';
 import 'package:translations_module/provider/translations_provider.dart';
 import 'package:ui_look_and_feel_module/src/providers/translation_providers.dart';
 
-Future<void> main() async {
-  await initializeApp();
-  runApp(const ProviderScope(child: MaterialAppContainer()));
-}
-
-Future<void> initializeApp() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await findSystemLocale();
-}
-
 class MaterialAppContainer extends ConsumerStatefulWidget {
-  const MaterialAppContainer({Key? key}) : super(key: key);
+  final Widget baseWidget;
+  const MaterialAppContainer({
+    Key? key,
+    required this.baseWidget,
+  }) : super(key: key);
 
   @override
   ConsumerState createState() => _MaterialAppContainerState();
@@ -51,7 +44,7 @@ class _MaterialAppContainerState extends ConsumerState<MaterialAppContainer> {
 
     return _buildContainer(
       state: widgetState,
-      rootWidget: Container(),
+      rootWidget: widget.baseWidget,
     );
   }
 

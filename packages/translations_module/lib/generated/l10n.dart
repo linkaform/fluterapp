@@ -110,11 +110,21 @@ class S {
     );
   }
 
-  /// `Validating credentials...`
-  String get validatingCredentialsMessage {
+  /// `Validating $...`
+  String get validatingMessage {
     return Intl.message(
-      'Validating credentials...',
-      name: 'validatingCredentialsMessage',
+      r'Validating $...',
+      name: 'validatingMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Credentials`
+  String get credentialsLabel {
+    return Intl.message(
+      'Credentials',
+      name: 'credentialsLabel',
       desc: '',
       args: [],
     );

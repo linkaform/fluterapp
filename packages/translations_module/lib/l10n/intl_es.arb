@@ -6,6 +6,7 @@
   "missedPasswordLabel": "Olvidaste tu contraseña?",
   "successfullyMessage": "Ingresaste a la aplicación exitosamente",
   "failureMessage": "Ocurrió un error al ingresar a la aplicación:",
-  "validatingCredentialsMessage": "Validadando credenciales...",
+  "validatingMessage": "Validating $...",
+  "credentialsLabel" : "Credenciales",
   "loginButtonText": "Login"
 }

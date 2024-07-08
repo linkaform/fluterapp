@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:translations_module/generated/l10n.dart';
 
-/// This provider allows you to **change the translation language** into every app
-/// that use the texts from lkf context.
+/// This provider allows you to **change the translation language**
+/// into every app that use the texts from lkf context.
 final localeProvider = StateProvider<Locale>(
   (ref) => Locale(Intl.systemLocale),
 );
