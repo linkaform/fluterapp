@@ -24,3 +24,5 @@ dev_dependencies:
 
 flutter_intl:
   enabled: true
+  class_name: S
+  main_locale: es

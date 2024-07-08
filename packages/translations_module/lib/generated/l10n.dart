@@ -60,70 +60,70 @@ class S {
     );
   }
 
-  /// `Email`
+  /// `Correo`
   String get emailLabel {
     return Intl.message(
-      'Email',
+      'Correo',
       name: 'emailLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `Password`
+  /// `Contraseña`
   String get passwordLabel {
     return Intl.message(
-      'Password',
+      'Contraseña',
       name: 'passwordLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `Please enter an email`
+  /// `Por favor ingresa un correo electrónico`
   String get enterEmailErrorMessage {
     return Intl.message(
-      'Please enter an email',
+      'Por favor ingresa un correo electrónico',
       name: 'enterEmailErrorMessage',
       desc: '',
       args: [],
     );
   }
 
-  /// `Please enter a password`
+  /// `Por favor ingresa una contraseña`
   String get enterPasswordErrorMessage {
     return Intl.message(
-      'Please enter a password',
+      'Por favor ingresa una contraseña',
       name: 'enterPasswordErrorMessage',
       desc: '',
       args: [],
     );
   }
 
-  /// `Did you miss the password?`
+  /// `Olvidaste tu contraseña?`
   String get missedPasswordLabel {
     return Intl.message(
-      'Did you miss the password?',
+      'Olvidaste tu contraseña?',
       name: 'missedPasswordLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `Login was successfully`
+  /// `Ingresaste a la aplicación exitosamente`
   String get successfullyMessage {
     return Intl.message(
-      'Login was successfully',
+      'Ingresaste a la aplicación exitosamente',
       name: 'successfullyMessage',
       desc: '',
       args: [],
     );
   }
 
-  /// `Ops! There's an error when we try to login: `
+  /// `Ocurrió un error al ingresar a la aplicación:`
   String get failureMessage {
     return Intl.message(
-      'Ops! There\'s an error when we try to login: ',
+      'Ocurrió un error al ingresar a la aplicación:',
       name: 'failureMessage',
       desc: '',
       args: [],
@@ -140,20 +140,20 @@ class S {
     );
   }
 
-  /// `Credentials`
+  /// `Credenciales`
   String get credentialsLabel {
     return Intl.message(
-      'Credentials',
+      'Credenciales',
       name: 'credentialsLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `Settings`
+  /// `Configuraciones`
   String get settingsLabel {
     return Intl.message(
-      'Settings',
+      'Configuraciones',
       name: 'settingsLabel',
       desc: '',
       args: [],
@@ -176,8 +176,8 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
 
   List<Locale> get supportedLocales {
     return const <Locale>[
-      Locale.fromSubtags(languageCode: 'en'),
       Locale.fromSubtags(languageCode: 'es'),
+      Locale.fromSubtags(languageCode: 'en'),
     ];
   }
 

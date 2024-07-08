@@ -7,7 +7,7 @@ import '../snack_bars/common_snackbar.dart';
 class LoginProgressButtonWidget extends ConsumerStatefulWidget {
   final bool isLoading;
   final GlobalKey<FormState> formKey;
-  final Future<void> Function() function;
+  final VoidCallback function;
 
   const LoginProgressButtonWidget({
     super.key,
@@ -30,15 +30,14 @@ class _LoginProgressButtonWidgetState
         ? const CircularProgressIndicator()
         : OutlinedButton(
             onPressed: () async {
-              if (widget.formKey.currentState?.validate() != null) {
-                buildSuccessSnackBar(
-                    translation.validatingMessage.replaceFirst(
-                      '\$',
-                      translation.credentialsLabel,
-                    ),
-                    Colors.greenAccent);
-                widget.function;
-              }
+              buildSuccessSnackBar(
+                  translation.validatingMessage.replaceFirst(
+                    '\$',
+                    translation.credentialsLabel,
+                  ),
+                  Colors.greenAccent);
+              if (widget.formKey.currentState?.validate() != null)
+                widget.function();
             },
             child: Text(translation.loginButtonText),
           );
