@@ -3,7 +3,9 @@ import 'package:login_module/login/infrastructure/login_repository_impl.dart';
 import 'state/login_state.dart';
 
 final loginNotifierProvider = StateNotifierProvider<LoginNotifier, LoginState>(
-  (ref) => LoginNotifier(repository: ref.read(loginRepositoryProvider)),
+  (ref) => LoginNotifier(
+    repository: ref.read(loginRepositoryProvider),
+  ),
 );
 
 class LoginNotifier extends StateNotifier<LoginState> {
@@ -15,10 +17,17 @@ class LoginNotifier extends StateNotifier<LoginState> {
     state = state.copyWith(isLoading: true);
 
     /// Mocked Login
+    ///
+    /// Invalid path
     Future.delayed(
       Duration(seconds: 2),
-      () => state = state.copyWith(isLoading: false, loginSuccess: true),
+      () => state = state.copyWith(
+          isLoading: false,
+          loginSuccess: false,
+          errorShown: false,
+          error: 'Invalid'),
     );
+
     // Future.wait([dataSource.login(username, password)]).then((value) {
     //   sharedPreferences.setStringList('credentials', [username, password]);
     //   state = state.copyWith(isLoading: false, loginSuccess: true);
@@ -26,4 +35,6 @@ class LoginNotifier extends StateNotifier<LoginState> {
     //   state = state.copyWith(isLoading: false, error: error.toString());
     // });
   }
+
+  void markErrorAsShown() => state = state.copyWith(errorShown: true);
 }

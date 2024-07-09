@@ -29,6 +29,7 @@ class _LoginFormWidgetState extends ConsumerState<LoginFormWidget> {
       padding: const EdgeInsets.all(20.0),
       child: Form(
         key: widget.formKey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           children: [
             Padding(
@@ -67,11 +68,4 @@ class _LoginFormWidgetState extends ConsumerState<LoginFormWidget> {
 
   void showPassword() =>
       setState(() => _isPasswordVisible = !_isPasswordVisible);
-
-  @override
-  void dispose() {
-    widget.emailController.dispose();
-    widget.passwordController.dispose();
-    super.dispose();
-  }
 }

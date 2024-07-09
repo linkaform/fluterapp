@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:translations_module/generated/l10n.dart';
 import 'package:translations_module/provider/translations_provider.dart';
 import 'package:ui_look_and_feel_module/src/providers/translation_providers.dart';
 
 class MaterialAppContainer extends ConsumerStatefulWidget {
   final Widget baseWidget;
+  final GoRouter router;
   const MaterialAppContainer({
     Key? key,
     required this.baseWidget,
+    required this.router,
   }) : super(key: key);
 
   @override
@@ -44,17 +47,18 @@ class _MaterialAppContainerState extends ConsumerState<MaterialAppContainer> {
 
     return _buildContainer(
       state: widgetState,
-      rootWidget: widget.baseWidget,
+      router: widget.router,
     );
   }
 
   Widget _buildContainer({
     required TranslationState state,
-    required Widget rootWidget,
+    required GoRouter router,
   }) {
     switch (state.widgetState) {
       case TranslationWidgetState.Success:
         return _buildMaterialApp(
+          router: router,
           locale: ref.watch(localeProvider),
           localizationsDelegates: [
             state.translationDelegate,
@@ -63,10 +67,10 @@ class _MaterialAppContainerState extends ConsumerState<MaterialAppContainer> {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: state.translationDelegate.supportedLocales,
-          home: rootWidget,
         );
       case TranslationWidgetState.Error:
         return _buildMaterialApp(
+          router: router,
           home: Scaffold(
             body: Center(
               child: Text(state.errorText ?? 'Error'),
@@ -76,6 +80,7 @@ class _MaterialAppContainerState extends ConsumerState<MaterialAppContainer> {
       case TranslationWidgetState.Loading:
       default:
         return _buildMaterialApp(
+          router: router,
           home: Scaffold(
             body: Center(
               child: CircularProgressIndicator(),
@@ -89,9 +94,10 @@ class _MaterialAppContainerState extends ConsumerState<MaterialAppContainer> {
     Locale? locale,
     List<LocalizationsDelegate>? localizationsDelegates,
     List<Locale>? supportedLocales,
-    required Widget home,
+    Widget? home,
+    required GoRouter router,
   }) {
-    return MaterialApp(
+    return MaterialApp.router(
       locale: locale,
       localizationsDelegates: localizationsDelegates ??
           [
@@ -100,8 +106,10 @@ class _MaterialAppContainerState extends ConsumerState<MaterialAppContainer> {
             GlobalCupertinoLocalizations.delegate,
             S.delegate,
           ],
-      supportedLocales: supportedLocales ?? [Locale('es')],
-      home: home,
+      supportedLocales: supportedLocales ?? [const Locale('es')],
+      routerDelegate: router.routerDelegate,
+      routeInformationParser: router.routeInformationParser,
+      routeInformationProvider: router.routeInformationProvider,
     );
   }
 }
