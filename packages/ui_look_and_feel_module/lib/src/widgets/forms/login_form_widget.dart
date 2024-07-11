@@ -40,7 +40,11 @@ class _LoginFormWidgetState extends ConsumerState<LoginFormWidget> {
                   labelText: translations.emailLabel,
                   border: OutlineInputBorder(),
                 ),
-                validator: (_) => validateField(ref, _, FieldType.Email),
+                validator: (_) => ref.read(
+                  loginFormValidationProvider(
+                    LoginFormType(_, FieldType.Email),
+                  ),
+                ),
               ),
             ),
             TextFormField(
@@ -58,7 +62,11 @@ class _LoginFormWidgetState extends ConsumerState<LoginFormWidget> {
                   onPressed: () => showPassword(),
                 ),
               ),
-              validator: (_) => validateField(ref, _, FieldType.Password),
+              validator: (_) => ref.read(
+                loginFormValidationProvider(
+                  LoginFormType(_, FieldType.Password),
+                ),
+              ),
             ),
           ],
         ),

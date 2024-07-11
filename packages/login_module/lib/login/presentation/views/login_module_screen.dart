@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ui_look_and_feel_module/module_exports.dart';
 import '../providers/login_provider.dart';
@@ -24,37 +23,55 @@ class LoginScreenState extends ConsumerState<LoginModuleScreen> {
     final state = ref.watch(loginNotifierProvider);
     final translation = ref.watch(translationWidgetStateProvider).translations;
 
-    /// Possible issue, when this toast is display, the controllers are clear
-    if (state.loginSuccess) {
-      SchedulerBinding.instance.addPersistentFrameCallback((_) {
-        _showSnackBar(context, translation.successfullyMessage, Colors.green);
-      });
-    } else if (state.error != null && !state.errorShown) {
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        _showSnackBar(context, translation.failureMessage, Colors.red);
-        ref.read(loginNotifierProvider.notifier).markErrorAsShown();
-      });
-    }
+    ref.listen(loginNotifierProvider, (previous, next) {
+      if (next.loginSuccess) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _showSnackBar(context, translation.successfullyMessage, Colors.green);
+        });
+      } else if (next.error != null && !next.errorShown) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _showSnackBar(context, translation.failureMessage, Colors.red);
+          ref.read(loginNotifierProvider.notifier).markErrorAsShown();
+        });
+      }
+    });
 
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            LinkaformLogoWidget(),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 30.0),
+              child: LinkaformLogoWidget(),
+            ),
             LoginFormWidget(
                 formKey: _formKey,
                 emailController: _emailController,
                 passwordController: _passwordController),
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 5.0,
+                bottom: 40.0,
+                right: 20.0,
+              ),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  translation.missedPasswordLabel,
+                ),
+              ),
+            ),
             LoginProgressButtonWidget(
                 isLoading: state.isLoading,
                 formKey: _formKey,
-                function: () => (_emailController.text.isNotEmpty == true &&
-                        _passwordController.text.isNotEmpty == true)
-                    ? ref
+                function: () {
+                  if (_formKey.currentState?.validate() ?? false) {
+                    ref
                         .watch(loginNotifierProvider.notifier)
-                        .login(_emailController.text, _passwordController.text)
-                    : ())
+                        .login(_emailController.text, _passwordController.text);
+                  }
+                }),
           ],
         ),
       ),
@@ -64,5 +81,12 @@ class LoginScreenState extends ConsumerState<LoginModuleScreen> {
   void _showSnackBar(BuildContext context, String message, Color color) {
     ScaffoldMessenger.of(context)
         .showSnackBar(buildSuccessSnackBar(message, color));
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 }

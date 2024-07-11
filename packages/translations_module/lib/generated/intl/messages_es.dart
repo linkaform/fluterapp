@@ -30,11 +30,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterPasswordErrorMessage": MessageLookupByLibrary.simpleMessage(
             "Por favor ingresa una contraseña"),
         "failureMessage": MessageLookupByLibrary.simpleMessage(
-            "Ocurrió un error al ingresar a la aplicación:"),
+            "Ocurrió un error al ingresar a la aplicación"),
         "linkaformAppTitle": MessageLookupByLibrary.simpleMessage("Linkaform"),
         "loginButtonText": MessageLookupByLibrary.simpleMessage("Login"),
         "missedPasswordLabel":
-            MessageLookupByLibrary.simpleMessage("Olvidaste tu contraseña?"),
+            MessageLookupByLibrary.simpleMessage("¿Olvidó su contraseña?"),
         "passwordLabel": MessageLookupByLibrary.simpleMessage("Contraseña"),
         "settingsLabel":
             MessageLookupByLibrary.simpleMessage("Configuraciones"),

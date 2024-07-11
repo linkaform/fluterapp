@@ -100,10 +100,10 @@ class S {
     );
   }
 
-  /// `Olvidaste tu contraseña?`
+  /// `¿Olvidó su contraseña?`
   String get missedPasswordLabel {
     return Intl.message(
-      'Olvidaste tu contraseña?',
+      '¿Olvidó su contraseña?',
       name: 'missedPasswordLabel',
       desc: '',
       args: [],
@@ -120,10 +120,10 @@ class S {
     );
   }
 
-  /// `Ocurrió un error al ingresar a la aplicación:`
+  /// `Ocurrió un error al ingresar a la aplicación`
   String get failureMessage {
     return Intl.message(
-      'Ocurrió un error al ingresar a la aplicación:',
+      'Ocurrió un error al ingresar a la aplicación',
       name: 'failureMessage',
       desc: '',
       args: [],

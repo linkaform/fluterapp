@@ -1,1 +1,31 @@
-<color name="milk_tea">#F5CB84</color>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sections Colors -->
+    <color name="colorTurno">#FFD966</color>
+    <color name="colorUbicacion">#9FC5F8</color>
+    <color name="colorPaseEntrada">#93C47D</color>
+    <color name="colorNotas">#B4A7D6</color>
+    <color name="colorRondines">#E4C59E</color>
+    <color name="colorIncidentes">#CF2A27</color>
+    <color name="colorFallas">#CCCCCC</color>
+    <color name="colorEquipos">#AAD7D9</color>
+    <color name="colorVisitas">#F6B26B</color>
+    <color name="colorPaquetes">#D1D8C5</color>
+    <color name="colorEquiposPerdidos">#8DDCCB</color>
+    <color name="colorFondo">#EEEEEE</color>
+
+    <!-- Buttons Colors -->
+    <color name="colorCancel">#666666</color>
+    <color name="colorConfirmNew">#009E0F</color>
+    <color name="colorDeleteStandOutIncidentes">#CC0000</color>
+    <color name="colorChangeOther">#2B78E4</color>
+    <color name="colorTypeObjetosPerdidos">#A64D79</color>
+    <color name="colorListFallas">#FF9900</color>
+
+    <!-- Text Colors -->
+    <color name="colorTitleSubtitle">#000000</color>
+    <color name="colorBody">#000000</color>
+    <color name="colorHideText">#999999</color>
+    <color name="colorEstatusRed">#CC0000</color>
+    <color name="colorEstatusGreen">#009E0F</color>
+</resources>

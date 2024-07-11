@@ -28,12 +28,10 @@ dev_dependencies:
   very_good_analysis: ^5.1.0
 
 flutter:
-
-  assets:
-    - assets/images/
-
   uses-material-design: true
   generate: true
+  assets:
+    - assets/images/
 
 flutter_gen:
   output: lib/gen/ # Optional (default: lib/gen/)

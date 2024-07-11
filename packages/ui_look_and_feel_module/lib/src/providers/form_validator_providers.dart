@@ -12,14 +12,10 @@ class LoginFormType {
   LoginFormType(this.value, this.fieldType);
 }
 
-String? validateField(WidgetRef ref, String? value, FieldType fieldType) {
-  return ref.read(loginFormValidationProvider(LoginFormType(value, fieldType)));
-}
-
 final loginFormValidationProvider = Provider.family<String?, LoginFormType>(
   (ref, loginType) {
     final translations = ref.watch(translationWidgetStateProvider).translations;
-    if (loginType.value?.isEmpty ?? true) {
+    if (loginType.value?.isEmpty == true) {
       return loginType.fieldType == FieldType.Email
           ? translations.enterEmailErrorMessage
           : translations.enterPasswordErrorMessage;

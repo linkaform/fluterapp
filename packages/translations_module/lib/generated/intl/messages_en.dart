@@ -33,7 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "linkaformAppTitle": MessageLookupByLibrary.simpleMessage("Linkaform"),
         "loginButtonText": MessageLookupByLibrary.simpleMessage("Login"),
         "missedPasswordLabel":
-            MessageLookupByLibrary.simpleMessage("Did you miss the password?"),
+            MessageLookupByLibrary.simpleMessage("Did you miss your password?"),
         "passwordLabel": MessageLookupByLibrary.simpleMessage("Password"),
         "settingsLabel": MessageLookupByLibrary.simpleMessage("Settings"),
         "successfullyMessage":

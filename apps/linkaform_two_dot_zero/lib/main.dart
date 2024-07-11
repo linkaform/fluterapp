@@ -7,14 +7,16 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Future.wait([
     SharedPreferences.getInstance(),
-  ]).then((value) => runApp(
-        ProviderScope(
-          overrides: [
-            sharedPreferencesProvider.overrideWithValue(value[0]),
-          ],
-          child: const MyApp(),
-        ),
-      ));
+  ]).then(
+    (value) => runApp(
+      ProviderScope(
+        overrides: [
+          sharedPreferencesProvider.overrideWithValue(value[0]),
+        ],
+        child: const MyApp(),
+      ),
+    ),
+  );
 }
 
 class MyApp extends ConsumerWidget {
