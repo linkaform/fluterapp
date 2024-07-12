@@ -23,19 +23,6 @@ class LoginScreenState extends ConsumerState<LoginModuleScreen> {
     final state = ref.watch(loginNotifierProvider);
     final translation = ref.watch(translationWidgetStateProvider).translations;
 
-    ref.listen(loginNotifierProvider, (previous, next) {
-      if (next.loginSuccess) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          _showSnackBar(context, translation.successfullyMessage, Colors.green);
-        });
-      } else if (next.error != null && !next.errorShown) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          _showSnackBar(context, translation.failureMessage, Colors.red);
-          ref.read(loginNotifierProvider.notifier).markErrorAsShown();
-        });
-      }
-    });
-
     return Scaffold(
       body: Center(
         child: Column(
@@ -52,13 +39,15 @@ class LoginScreenState extends ConsumerState<LoginModuleScreen> {
             Padding(
               padding: const EdgeInsets.only(
                 top: 5.0,
-                bottom: 40.0,
+                bottom: 30.0,
                 right: 20.0,
               ),
               child: Align(
                 alignment: Alignment.centerRight,
-                child: Text(
-                  translation.missedPasswordLabel,
+                child: TextButton(
+                  onPressed: () {},
+                  style: LinkaformSecurityStyles.textHoveredButtonStyle,
+                  child: Text(translation.missedPasswordLabel),
                 ),
               ),
             ),
@@ -76,11 +65,6 @@ class LoginScreenState extends ConsumerState<LoginModuleScreen> {
         ),
       ),
     );
-  }
-
-  void _showSnackBar(BuildContext context, String message, Color color) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(buildSuccessSnackBar(message, color));
   }
 
   @override

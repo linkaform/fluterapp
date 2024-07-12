@@ -26,11 +26,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Credenciales"),
         "emailLabel": MessageLookupByLibrary.simpleMessage("Correo"),
         "enterEmailErrorMessage": MessageLookupByLibrary.simpleMessage(
-            "Por favor ingresa un correo electrónico"),
+            "Por favor ingresa un correo electrónico",),
         "enterPasswordErrorMessage": MessageLookupByLibrary.simpleMessage(
-            "Por favor ingresa una contraseña"),
+            "Por favor ingresa una contraseña",),
         "failureMessage": MessageLookupByLibrary.simpleMessage(
-            "Ocurrió un error al ingresar a la aplicación"),
+            "Ocurrió un error al ingresar a la aplicación",),
         "linkaformAppTitle": MessageLookupByLibrary.simpleMessage("Linkaform"),
         "loginButtonText": MessageLookupByLibrary.simpleMessage("Login"),
         "missedPasswordLabel":
@@ -39,8 +39,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsLabel":
             MessageLookupByLibrary.simpleMessage("Configuraciones"),
         "successfullyMessage": MessageLookupByLibrary.simpleMessage(
-            "Ingresaste a la aplicación exitosamente"),
+            "Ingresaste a la aplicación exitosamente",),
         "validatingMessage":
-            MessageLookupByLibrary.simpleMessage("Validating \$...")
+            MessageLookupByLibrary.simpleMessage(r"Validating $..."),
       };
 }

@@ -29,7 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterPasswordErrorMessage":
             MessageLookupByLibrary.simpleMessage("Please enter a password"),
         "failureMessage": MessageLookupByLibrary.simpleMessage(
-            "Ops! There\'s an error when we try to login: "),
+            "Ops! There\'s an error when we try to login: ",),
         "linkaformAppTitle": MessageLookupByLibrary.simpleMessage("Linkaform"),
         "loginButtonText": MessageLookupByLibrary.simpleMessage("Login"),
         "missedPasswordLabel":
@@ -39,6 +39,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "successfullyMessage":
             MessageLookupByLibrary.simpleMessage("Login was successfully"),
         "validatingMessage":
-            MessageLookupByLibrary.simpleMessage("Validating \$...")
+            MessageLookupByLibrary.simpleMessage(r"Validating $..."),
       };
 }

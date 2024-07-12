@@ -18,16 +18,24 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
     /// Mocked Login
     ///
-    /// Invalid path
+    /// *** Invalid path ***
+    ///
+    /// Future.delayed(
+    ///   Duration(seconds: 2),
+    ///   () => state = state.copyWith(
+    ///       isLoading: false,
+    ///       loginSuccess: false,
+    ///       errorShown: false,
+    ///       error: 'Invalid'),
+    /// );
+
+    /// ***Happy path ***
     Future.delayed(
       Duration(seconds: 2),
-      () => state = state.copyWith(
-          isLoading: false,
-          loginSuccess: false,
-          errorShown: false,
-          error: 'Invalid'),
+      () => state = state.copyWith(isLoading: false, loginSuccess: true),
     );
 
+    /// Real path
     // Future.wait([dataSource.login(username, password)]).then((value) {
     //   sharedPreferences.setStringList('credentials', [username, password]);
     //   state = state.copyWith(isLoading: false, loginSuccess: true);
@@ -37,4 +45,12 @@ class LoginNotifier extends StateNotifier<LoginState> {
   }
 
   void markErrorAsShown() => state = state.copyWith(errorShown: true);
+
+  void triggerNavigation() {
+    state = state.copyWith(navigateToHome: true);
+  }
+
+  void resetNavigation() {
+    state = state.copyWith(navigateToHome: false);
+  }
 }

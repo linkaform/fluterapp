@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:translations_module/generated/l10n.dart';
 import 'package:translations_module/provider/translations_provider.dart';
-import 'package:ui_look_and_feel_module/src/providers/translation_providers.dart';
 
 class MaterialAppContainer extends ConsumerStatefulWidget {
   final Widget baseWidget;
@@ -22,94 +21,68 @@ class MaterialAppContainer extends ConsumerStatefulWidget {
 class _MaterialAppContainerState extends ConsumerState<MaterialAppContainer> {
   @override
   Widget build(BuildContext context) {
-    final widgetState = ref.watch(translationWidgetStateProvider);
-    final widgetStateNotifier =
-        ref.watch(translationWidgetStateProvider.notifier);
+    final locale = ref.watch(localeProvider);
+    final futureTranslations = ref.watch(translationProvider.future);
 
-    ref.listen<AsyncValue<S>>(
-      translationProvider,
-      (previous, next) {
-        next.when(
-          loading: () => widgetStateNotifier.changeWidgetState(
-            widgetState: TranslationWidgetState.Loading,
-          ),
-          data: (translations) => widgetStateNotifier.changeWidgetState(
-            widgetState: TranslationWidgetState.Success,
-            translations: translations,
-          ),
-          error: (error, stack) => widgetStateNotifier.changeWidgetState(
-            widgetState: TranslationWidgetState.Error,
-            errorText: error.toString(),
-          ),
-        );
+    return FutureBuilder(
+      future: futureTranslations,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return _buildLoadingScreen();
+        } else if (snapshot.hasError) {
+          return _buildErrorScreen(snapshot.error);
+        } else if (snapshot.hasData) {
+          final translationDelegate = snapshot.data!;
+          return _buildMaterialApp(context, locale, translationDelegate);
+        } else {
+          return _buildErrorScreen('Unknown error occurred');
+        }
       },
     );
+  }
 
-    return _buildContainer(
-      state: widgetState,
-      router: widget.router,
+  Widget _buildMaterialApp(
+    BuildContext context,
+    Locale? locale,
+    S translationDelegate,
+  ) {
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: MaterialApp.router(
+        locale: locale,
+        localizationsDelegates: [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: S.delegate.supportedLocales,
+        routerDelegate: widget.router.routerDelegate,
+        routeInformationParser: widget.router.routeInformationParser,
+        routeInformationProvider: widget.router.routeInformationProvider,
+      ),
     );
   }
 
-  Widget _buildContainer({
-    required TranslationState state,
-    required GoRouter router,
-  }) {
-    switch (state.widgetState) {
-      case TranslationWidgetState.Success:
-        return _buildMaterialApp(
-          router: router,
-          locale: ref.watch(localeProvider),
-          localizationsDelegates: [
-            state.translationDelegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: state.translationDelegate.supportedLocales,
-        );
-      case TranslationWidgetState.Error:
-        return _buildMaterialApp(
-          router: router,
-          home: Scaffold(
-            body: Center(
-              child: Text(state.errorText ?? 'Error'),
-            ),
-          ),
-        );
-      case TranslationWidgetState.Loading:
-      default:
-        return _buildMaterialApp(
-          router: router,
-          home: Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          ),
-        );
-    }
+  Widget _buildLoadingScreen() {
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+    );
   }
 
-  Widget _buildMaterialApp({
-    Locale? locale,
-    List<LocalizationsDelegate>? localizationsDelegates,
-    List<Locale>? supportedLocales,
-    Widget? home,
-    required GoRouter router,
-  }) {
-    return MaterialApp.router(
-      locale: locale,
-      localizationsDelegates: localizationsDelegates ??
-          [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            S.delegate,
-          ],
-      supportedLocales: supportedLocales ?? [const Locale('es')],
-      routerDelegate: router.routerDelegate,
-      routeInformationParser: router.routeInformationParser,
-      routeInformationProvider: router.routeInformationProvider,
+  Widget _buildErrorScreen(Object? error) {
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Scaffold(
+        body: Center(
+          child: Text('Error: $error'),
+        ),
+      ),
     );
   }
 }

@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ui_look_and_feel_module/module_exports.dart';
+import 'package:ui_look_and_feel_module/src/widgets/form_fields/login_fields/login_text_form_field.dart';
 
 import '../../providers/form_validator_providers.dart';
 
@@ -20,8 +22,6 @@ class LoginFormWidget extends ConsumerStatefulWidget {
 }
 
 class _LoginFormWidgetState extends ConsumerState<LoginFormWidget> {
-  var _isPasswordVisible = true;
-
   @override
   Widget build(BuildContext context) {
     final translations = ref.watch(translationWidgetStateProvider).translations;
@@ -29,51 +29,25 @@ class _LoginFormWidgetState extends ConsumerState<LoginFormWidget> {
       padding: const EdgeInsets.all(20.0),
       child: Form(
         key: widget.formKey,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
+        autovalidateMode: AutovalidateMode.disabled,
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 20.0),
-              child: TextFormField(
+              child: LoginTextFormField(
+                label: translations.emailLabel,
                 controller: widget.emailController,
-                decoration: InputDecoration(
-                  labelText: translations.emailLabel,
-                  border: OutlineInputBorder(),
-                ),
-                validator: (_) => ref.read(
-                  loginFormValidationProvider(
-                    LoginFormType(_, FieldType.Email),
-                  ),
-                ),
+                fieldType: FieldType.Email,
               ),
             ),
-            TextFormField(
+            LoginTextFormField(
+              label: translations.passwordLabel,
               controller: widget.passwordController,
-              obscureText: _isPasswordVisible,
-              decoration: InputDecoration(
-                labelText: translations.passwordLabel,
-                border: const OutlineInputBorder(),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _isPasswordVisible
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                  ),
-                  onPressed: () => showPassword(),
-                ),
-              ),
-              validator: (_) => ref.read(
-                loginFormValidationProvider(
-                  LoginFormType(_, FieldType.Password),
-                ),
-              ),
-            ),
+              fieldType: FieldType.Password,
+            )
           ],
         ),
       ),
     );
   }
-
-  void showPassword() =>
-      setState(() => _isPasswordVisible = !_isPasswordVisible);
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ui_look_and_feel_module/gen/colors.gen.dart';
 import 'package:ui_look_and_feel_module/src/providers/translation_providers.dart';
 
 import '../../styles/linkaform_security_styles.dart';
@@ -28,7 +29,7 @@ class _LoginProgressButtonWidgetState
     final translation = ref.watch(translationWidgetStateProvider).translations;
 
     return widget.isLoading
-        ? const CircularProgressIndicator()
+        ? const CircularProgressIndicator(color: ColorName.colorChangeOther)
         : ElevatedButton(
             style: LinkaformSecurityStyles.primaryButtonStyle,
             onPressed: () async {
