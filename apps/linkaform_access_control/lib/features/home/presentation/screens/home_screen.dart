@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:linkaform_access_control/features/scanner/presentation/screens/scan_qr_screen.dart';
 import 'package:linkaform_access_control/features/start_tour/presentation/screens/start_tour_screen.dart';
 import 'package:ui_look_and_feel_module/module_exports.dart';
 
@@ -50,20 +51,22 @@ class HomeScreen extends ConsumerWidget {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
+        items:  [
+          const BottomNavigationBarItem(
             icon: Icon(Icons.star),
             label: 'Turno',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.person_add),
             label: 'Nuevo',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.qr_code_scanner),
+            icon: InkWell(
+                onTap: () => context.push(ScanQrScreen.path),
+                child: const Icon(Icons.qr_code_scanner)),
             label: 'Escanear',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.logout),
             label: 'Salir',
           ),
