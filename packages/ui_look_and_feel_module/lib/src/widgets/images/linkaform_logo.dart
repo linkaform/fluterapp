@@ -15,8 +15,8 @@ class LinkaformLogoWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Assets.images.fullLogo.image(
-      height: height ?? 30.0,
-      width: width,
+      width: width ?? 200,
+      height: height,
     );
   }
 }

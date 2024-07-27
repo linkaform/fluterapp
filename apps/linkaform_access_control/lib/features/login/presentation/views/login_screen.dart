@@ -9,8 +9,8 @@ import 'package:ui_look_and_feel_module/ui_look_and_feel_module.dart';
 
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
-  static String path = '/';
-  static String name = 'login';
+  static const String path = '/';
+  static const String name = 'login';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

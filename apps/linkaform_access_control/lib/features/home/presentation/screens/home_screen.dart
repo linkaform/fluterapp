@@ -2,17 +2,32 @@
 // static String name = 'home';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:linkaform_access_control/features/start_tour/presentation/screens/start_tour_screen.dart';
 import 'package:ui_look_and_feel_module/module_exports.dart';
 
-class HomeScreen extends StatelessWidget {
+import '../providers/home_providers.dart';
+
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
-  static String path = '/home';
-  static String name = 'home';
+
+  static const String path = '/home';
+  static const String name = 'home';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final guardHouseValue = ref.watch(guardHouseValueProvider);
+    final guardHouseList = ref.watch(guardHouseListProvider);
+
     return Scaffold(
-      appBar: const HomeAppBar(),
+      appBar: HomeAppBar(
+        defaultValue: guardHouseValue,
+        dropdownList: guardHouseList,
+        onSelected: (selectedGuardHouse) {
+          ref.read(guardHouseValueProvider.notifier).state = selectedGuardHouse;
+        },
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: GridView.count(
@@ -53,6 +68,18 @@ class HomeScreen extends StatelessWidget {
             label: 'Salir',
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50),
+        ),
+        backgroundColor: Colors.blue,
+        onPressed: () => context.push(StartTourScreen.path),
+        child: const Icon(
+          Icons.directions_walk,
+          color: Colors.white,
+          size: 35,
+        ),
       ),
     );
   }

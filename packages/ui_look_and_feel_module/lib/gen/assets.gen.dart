@@ -20,8 +20,12 @@ class $AssetsImagesGen {
   AssetGenImage get logoColored =>
       const AssetGenImage('packages/ui_look_and_feel_module/assets/images/logo_colored.jpeg');
 
+  /// File path: assets/images/unloaded_user.png
+  AssetGenImage get unloadedUser =>
+      const AssetGenImage('packages/ui_look_and_feel_module/assets/images/unloaded_user.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [fullLogo, logoColored];
+  List<AssetGenImage> get values => [fullLogo, logoColored, unloadedUser];
 }
 
 class Assets {

@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ui_look_and_feel_module/module_exports.dart';
 
-class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const HomeAppBar({super.key});
+class HomeAppBar extends ConsumerStatefulWidget implements PreferredSizeWidget {
+  final String defaultValue;
+  final List<String> dropdownList;
+  final Function(String)? onSelected;
+
+  const HomeAppBar({
+    super.key,
+    required this.defaultValue,
+    required this.dropdownList,
+    this.onSelected,
+  });
 
   @override
-  State<HomeAppBar> createState() => _HomeAppBarState();
+  ConsumerState<HomeAppBar> createState() => _HomeAppBarState();
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
 
-class _HomeAppBarState extends State<HomeAppBar> {
+class _HomeAppBarState extends ConsumerState<HomeAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -28,11 +38,8 @@ class _HomeAppBarState extends State<HomeAppBar> {
                   color: ColorName.colorBody,
                   size: 24,
                 ),
-                value: 'Planta Monterrey - Caseta 6 Poniente',
-                items: <String>[
-                  'Planta Monterrey - Caseta 6 Poniente',
-                  'Otra Ubicación',
-                ].map<DropdownMenuItem<String>>((String value) {
+                value: widget.defaultValue,
+                items: widget.dropdownList.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(
@@ -46,7 +53,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
                     ),
                   );
                 }).toList(),
-                onChanged: (_) {},
+                onChanged: (selectedValue) => widget.onSelected != null ? widget.onSelected!(selectedValue ?? '') : null ,
               ),
             ),
           ),

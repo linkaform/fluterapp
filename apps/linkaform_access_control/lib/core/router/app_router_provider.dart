@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:linkaform_access_control/features/home/presentation/screens/home_screen.dart';
 import 'package:linkaform_access_control/features/login/presentation/views/login_screen.dart';
+import 'package:linkaform_access_control/features/start_tour/presentation/screens/start_tour_screen.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -14,6 +15,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: HomeScreen.path,
         builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: StartTourScreen.path,
+        builder: (context, state) => const StartTourScreen(),
       ),
     ],
   );

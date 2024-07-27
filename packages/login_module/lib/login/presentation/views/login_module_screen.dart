@@ -18,6 +18,16 @@ class LoginScreenState extends ConsumerState<LoginModuleScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _emailController.text = const String.fromEnvironment('username') ?? '';
+    _passwordController.text = const String.fromEnvironment('password') ?? '';
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(loginNotifierProvider);
