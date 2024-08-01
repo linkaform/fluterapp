@@ -5,6 +5,39 @@ packages:
   - packages/**
 
 scripts:
-  gen:
-    exec: dart run build_runner build --delete-conflicting-outputs && flutter gen-l10n
-    description: Generating assets from packages
+  nuke:
+    run: |
+      melos exec -c 1 -- flutter clean
+      melos run clean_generated_files
+    description: Clean the project
+
+  clean_generated_files:
+    run: |
+      melos exec -c 1 -- rm -rf assets/l10n/*.dart
+      melos exec -c 1 -- rm -rf lib/gen/*
+    description: Clean generated files
+
+  initial_run:
+    exec: sh ../../initial_run.sh
+    description: Initial run to generate all necessary files
+
+  gen_assets:
+    run: |
+      melos exec -c 1 --scope="ui_look_and_feel_module" -- flutter pub run build_runner build --delete-conflicting-outputs
+    description: Generating assets for ui_look_and_feel_module
+
+  fix_asset_paths:
+    run: |
+      melos exec -c 1 --scope="ui_look_and_feel_module" -- python3 fix_asset_paths.py
+    description: Fix asset paths to include package prefix
+
+  gen_translations:
+    run: |
+      melos exec -c 1 --scope="translations_module" -- dart run intl_utils:generate
+    description: Generating translations for translations_module
+
+  generate_assets:
+    run: |
+      melos exec -c 1  melos gen_assets
+      melos fix_asset_paths
+      description: Generating assets already created
