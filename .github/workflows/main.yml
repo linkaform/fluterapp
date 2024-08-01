@@ -1,0 +1,29 @@
+format_version: "2"
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+
+workflows:
+  primary:
+    steps:
+    - activate-ssh-key@4: {}
+    - git-clone@6: {}
+    - flutter-installer@0:
+        inputs:
+        - version: "stable"
+    - flutter@1:
+        inputs:
+        - commands: pub get
+    - flutter@1:
+        inputs:
+        - commands: build apk --release
+    - xcode-archive@4:
+        inputs:
+        - project_path: $BITRISE_PROJECT_PATH
+        - scheme: $BITRISE_SCHEME
+        - export_method: app-store
+    - deploy-to-bitrise-io@2: {}
+
+app:
+  envs:
+  - BITRISE_FLUTTER_PROJECT_LOCATION: "."
+  - BITRISE_PROJECT_PATH: $BITRISE_SOURCE_DIR/ios/Runner.xcworkspace
+  - BITRISE_SCHEME: Runner
