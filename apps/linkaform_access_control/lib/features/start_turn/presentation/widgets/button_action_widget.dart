@@ -7,11 +7,13 @@ class ButtonActionWidget extends ConsumerWidget {
    const ButtonActionWidget({
      required this.label,
      required this.butttonColor,
+      required this.onPressed,
      super.key,
    });
   
   final String label;
   final Color butttonColor;
+  final Function() onPressed;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,7 +25,7 @@ class ButtonActionWidget extends ConsumerWidget {
           borderRadius: BorderRadius.circular(8),
         ),
       ),
-      onPressed: () => context.pop(),
+      onPressed: onPressed,
       child: Text(
         label,
         style: const TextStyle(

@@ -1,25 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ui_look_and_feel_module/gen/colors.gen.dart';
 
-class StatusGridWidget extends StatelessWidget {
+import '../providers/start_turn_providers.dart';
+
+class StatusGridWidget extends ConsumerStatefulWidget {
   const StatusGridWidget({super.key});
 
   @override
+  ConsumerState createState() => _StatusGridWidgetState();
+}
+
+class _StatusGridWidgetState extends ConsumerState<StatusGridWidget> {
+  @override
   Widget build(BuildContext context) {
+    final gridData =
+        ref.watch(startTurnProvider).loadShiftEntity?.data?.boothStats;
     return GridView.count(
       crossAxisCount: 3,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       children: [
-        statusItem('Personal Dentro', '23', Icons.people),
-        statusItem('Equipos Concesionados', '13', Icons.build),
-        statusItem('Fallas Pendientes', '2', Icons.warning),
-        statusItem('Vehículos Estacionados', '18', Icons.directions_car),
-        statusItem('Gafetes Pendientes', '14', Icons.badge),
+        statusItem(
+          'Personal Dentro',
+          gridData?.inInvitees.toString() ?? '',
+          Icons.people,
+        ),
+        statusItem(
+          'Equipos Concesionados',
+          gridData?.articulosConcesionados.toString() ?? '',
+          Icons.build,
+        ),
+        statusItem(
+          'Fallas Pendientes',
+          gridData?.incidentesPendites.toString() ?? '',
+          Icons.warning,
+        ),
+        statusItem(
+          'Vehículos Estacionados',
+          gridData?.vehiculosEstacionados.toString() ?? '',
+          Icons.directions_car,
+        ),
+        statusItem(
+          'Gafetes Pendientes',
+          gridData?.gefetesPendientes.toString() ?? '',
+          Icons.badge,
+        ),
       ],
     );
   }
-
 
   Widget statusItem(String label, String value, IconData icon) {
     return Card(
@@ -64,5 +93,4 @@ class StatusGridWidget extends StatelessWidget {
       ),
     );
   }
-
 }

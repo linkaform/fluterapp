@@ -4,6 +4,7 @@ class LoginState {
   final String? error;
   final bool errorShown;
   final bool navigateToHome;
+  final dynamic response;
 
   LoginState({
     this.isLoading = false,
@@ -11,6 +12,7 @@ class LoginState {
     this.error,
     this.errorShown = false,
     this.navigateToHome = false,
+    this.response,
   });
 
   LoginState copyWith({
@@ -19,6 +21,7 @@ class LoginState {
     String? error,
     bool? errorShown,
     bool? navigateToHome,
+    dynamic response,
   }) {
     return LoginState(
       isLoading: isLoading ?? this.isLoading,
@@ -26,6 +29,7 @@ class LoginState {
       error: error ?? this.error,
       errorShown: errorShown ?? this.errorShown,
       navigateToHome: navigateToHome ?? this.navigateToHome,
+      response: response ?? this.response,
     );
   }
 }

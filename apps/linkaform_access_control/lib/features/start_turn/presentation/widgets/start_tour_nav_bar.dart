@@ -1,38 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:linkaform_access_control/features/home/presentation/providers/home_providers.dart';
 import 'package:linkaform_access_control/features/home/presentation/screens/home_screen.dart';
 import 'package:ui_look_and_feel_module/ui_look_and_feel_module.dart';
 
-class StartTourNavBar extends StatelessWidget {
+import '../providers/start_turn_providers.dart';
+
+class StartTourNavBar extends ConsumerWidget {
   const StartTourNavBar({super.key});
 
   InputDecoration noteStyle(String label) => InputDecoration(
-    labelText: label,
-    labelStyle: const TextStyle(
-      color: Colors.black,
-      fontWeight: FontWeight.w500,
-    ),
-    border: const OutlineInputBorder(
-      borderSide: BorderSide(),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderSide: const BorderSide(
-        color: ColorName.colorHideText,
-      ),
-      borderRadius: BorderRadius.circular(4),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderSide: const BorderSide(
-        color: ColorName.colorHideText,
-        width: 2.0,
-      ),
-      borderRadius: BorderRadius.circular(2),
-    ),
-  );
-
+        labelText: label,
+        labelStyle: const TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.w500,
+        ),
+        border: const OutlineInputBorder(
+          borderSide: BorderSide(),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: ColorName.colorHideText,
+          ),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: ColorName.colorHideText,
+            width: 2.0,
+          ),
+          borderRadius: BorderRadius.circular(2),
+        ),
+      );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final loadShiftState = ref.watch(startTurnProvider).loadShiftEntity;
+    final chosenBoth = ref.watch(guardHouseSelectedValueProvider);
     return Container(
       color: ColorName.colorVisitas,
       height: MediaQuery.of(context).size.height * 0.08,
@@ -68,7 +73,7 @@ class StartTourNavBar extends StatelessWidget {
                               horizontal: 20, vertical: 10),
                           child: TextFormField(
                             decoration:
-                            noteStyle('Cualquier información adicional'),
+                                noteStyle('Cualquier información adicional'),
                           ),
                         ),
                         const Padding(
@@ -94,7 +99,7 @@ class StartTourNavBar extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 30),
                           child: TextFormField(
                               decoration:
-                              noteStyle('Documento de la evidencia')),
+                                  noteStyle('Documento de la evidencia')),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -103,8 +108,7 @@ class StartTourNavBar extends StatelessWidget {
                                 onPressed: () => context.pop(),
                                 child: const Text('Cancelar')),
                             OutlinedButton(
-                                onPressed: () {},
-                                child: const Text('Agregar')),
+                                onPressed: () {}, child: const Text('Agregar')),
                           ],
                         )
                       ],
@@ -134,8 +138,8 @@ class StartTourNavBar extends StatelessWidget {
                 content: IntrinsicHeight(
                   child: Column(
                     children: [
-                      const Text(
-                        'Esta seguro que desea iniciar turno en la Caseta 6?',
+                       Text(
+                        'Esta seguro que desea iniciar turno en la ${chosenBoth?.area ?? ''}?',
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -145,7 +149,7 @@ class StartTourNavBar extends StatelessWidget {
                               child: const Text('Cancelar')),
                           OutlinedButton(
                               onPressed: () => context.go(HomeScreen.path),
-                              child: const Text('Agregar')),
+                              child: const Text('Aceptar')),
                         ],
                       )
                     ],
@@ -153,10 +157,16 @@ class StartTourNavBar extends StatelessWidget {
                 ),
               ),
             ),
-            child: const Column(children: [
-              Icon(Icons.play_arrow),
-              Text('Iniciar'),
-            ]),
+            child: Column(
+              children: [
+                Icon(loadShiftState?.data?.guard?.status == 'in'
+                    ? Icons.logout
+                    : Icons.play_arrow),
+                Text(loadShiftState?.data?.guard?.status == 'in'
+                    ? 'Cerrar'
+                    : 'Iniciar'),
+              ],
+            ),
           ),
         ],
       ),

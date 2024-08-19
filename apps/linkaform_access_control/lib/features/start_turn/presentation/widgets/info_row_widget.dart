@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 
 class InfoRowWidget extends StatelessWidget {
   const InfoRowWidget({
-    super.key,
     required this.label,
     required this.value,
+    this.customStyle,
+    super.key,
   });
 
   final String label;
   final String value;
+  final TextStyle? customStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class InfoRowWidget extends StatelessWidget {
             flex: 3,
             child: Text(
               value,
-              style: const TextStyle(
+              style: customStyle ?? const TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.w500,
               ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:linkaform_access_control/features/scanner/presentation/screens/scan_result_screen.dart';
+import 'package:linkaform_access_control/features/scanner/presentation/screens/entry_passes_screen.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ScanQrScreen extends ConsumerStatefulWidget {
@@ -35,9 +35,7 @@ class _ScanQrScreenState extends ConsumerState<ScanQrScreen> {
             //   ),
             // ),
             OutlinedButton(
-              onPressed: () => context.push(
-                ScanResultScreen.path,
-              ),
+              onPressed: () {},
               child: Text('Go to Scan Result'),
             ),
             Expanded(
@@ -60,10 +58,10 @@ class _ScanQrScreenState extends ConsumerState<ScanQrScreen> {
       if (scanData.code != null) {
         print(scanData.code);
         controller.dispose();
-        context.goNamed(
-          ScanResultScreen.path,
-          pathParameters: {'code': scanData.code},
-        );
+        // context.goNamed(
+        //   ScanResultScreen.path,
+        //   pathParameters: {'code': scanData.code},
+        // );
       }
     });
   }

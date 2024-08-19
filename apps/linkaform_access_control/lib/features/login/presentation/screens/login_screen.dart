@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkaform_access_control/core/router/app_router_provider.dart';
-import 'package:linkaform_access_control/features/home/presentation/screens/home_screen.dart';
+import 'package:linkaform_access_control/features/login/presentation/providers/auth_providers.dart';
+import 'package:linkaform_access_control/features/start_turn/presentation/screens/start_turn_screen.dart';
 import 'package:login_module/login/presentation/providers/login_provider.dart';
 import 'package:login_module/login/presentation/providers/state/login_state.dart';
 import 'package:login_module/login/presentation/views/login_module_screen.dart';
@@ -9,6 +10,7 @@ import 'package:ui_look_and_feel_module/ui_look_and_feel_module.dart';
 
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
+
   static const String path = '/';
   static const String name = 'login';
 
@@ -42,12 +44,12 @@ class LoginScreen extends ConsumerWidget {
     ScaffoldMessenger.of(context)
         .showSnackBar(buildSuccessSnackBar(message, color))
         .closed
-        .then((_) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (ref.read(loginNotifierProvider).loginSuccess) {
-          ref.read(appRouterProvider).pushReplacement(HomeScreen.path);
-        }
-      });
+        .then((_) async {
+      final result = ref.read(loginNotifierProvider);
+      if (result.loginSuccess) {
+        await ref.read(authRepositoryProvider).login(result.response);
+        await ref.read(appRouterProvider).pushReplacement(StartTurnScreen.path);
+      }
     });
   }
 }

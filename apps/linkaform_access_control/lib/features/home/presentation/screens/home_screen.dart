@@ -1,14 +1,13 @@
-// static String path = '/home';
-// static String name = 'home';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:linkaform_access_control/features/home/presentation/providers/home_providers.dart';
 import 'package:linkaform_access_control/features/scanner/presentation/screens/scan_qr_screen.dart';
-import 'package:linkaform_access_control/features/start_tour/presentation/screens/start_tour_screen.dart';
+import 'package:linkaform_access_control/features/scanner/presentation/screens/entry_passes_screen.dart';
+import 'package:linkaform_access_control/features/start_turn/presentation/screens/start_turn_screen.dart';
 import 'package:ui_look_and_feel_module/module_exports.dart';
 
-import '../providers/home_providers.dart';
+import '../widgets/grid_item_widget.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -18,16 +17,16 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final guardHouseValue = ref.watch(guardHouseValueProvider);
+    final guardHouseValue = ref.watch(guardHouseSelectedValueProvider);
     final guardHouseList = ref.watch(guardHouseListProvider);
 
     return Scaffold(
       appBar: HomeAppBar(
-        defaultValue: guardHouseValue,
-        dropdownList: guardHouseList,
-        onSelected: (selectedGuardHouse) {
-          ref.read(guardHouseValueProvider.notifier).state = selectedGuardHouse;
-        },
+        bothValue:
+            '${guardHouseValue?.location ?? ''} - ${guardHouseValue?.area ?? ''}',
+        // onSelected: (selectedGuardHouse) {
+        //   ref.read(guardHouseValueProvider.notifier).state = selectedGuardHouse;
+        // },
       ),
       body: Padding(
         padding: const EdgeInsets.all(8),
@@ -35,23 +34,27 @@ class HomeScreen extends ConsumerWidget {
           crossAxisCount: 3,
           crossAxisSpacing: 8,
           mainAxisSpacing: 8,
-          children: [
-            _buildGridItem(Icons.search, 'Buscar Pase'),
-            _buildGridItem(Icons.person, 'Visitas'),
-            _buildGridItem(Icons.inventory, 'Paquetes'),
-            _buildGridItem(Icons.note, 'Notas'),
-            _buildGridItem(Icons.route, 'Rondines'),
-            _buildGridItem(Icons.warning, 'Incidencias'),
-            _buildGridItem(Icons.error, 'Fallas'),
-            _buildGridItem(Icons.build, 'Equipos'),
-            _buildGridItem(Icons.volume_up, 'Objetos Perdidos'),
-            _buildGridItem(Icons.settings, 'Configuración'),
+          children: const [
+            GridItemWidget(
+              icon: Icons.search,
+              label: 'Buscar Pase',
+              location: EntryPassesScreen.path,
+            ),
+            GridItemWidget(icon: Icons.person, label: 'Visitas'),
+            GridItemWidget(icon: Icons.inventory, label: 'Paquetes'),
+            GridItemWidget(icon: Icons.note, label: 'Notas'),
+            GridItemWidget(icon: Icons.route, label: 'Rondines'),
+            GridItemWidget(icon: Icons.warning, label: 'Incidencias'),
+            GridItemWidget(icon: Icons.error, label: 'Fallas'),
+            GridItemWidget(icon: Icons.build, label: 'Equipos'),
+            GridItemWidget(icon: Icons.volume_up, label: 'Objetos Perdidos'),
+            GridItemWidget(icon: Icons.settings, label: 'Configuración'),
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        items:  [
+        items: [
           const BottomNavigationBarItem(
             icon: Icon(Icons.star),
             label: 'Turno',
@@ -77,33 +80,13 @@ class HomeScreen extends ConsumerWidget {
           borderRadius: BorderRadius.circular(50),
         ),
         backgroundColor: Colors.blue,
-        onPressed: () => context.push(StartTourScreen.path),
+        onPressed: () => context.push(StartTurnScreen.path),
         child: const Icon(
           Icons.directions_walk,
           color: Colors.white,
           size: 35,
         ),
       ),
-    );
-  }
-
-  Widget _buildGridItem(IconData icon, String label) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          width: 60,
-          height: 60,
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.grey),
-          ),
-          child: Icon(icon, size: 40, color: Colors.black),
-        ),
-        const SizedBox(height: 8),
-        Text(label, textAlign: TextAlign.center),
-      ],
     );
   }
 }

@@ -3,16 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/find_locale.dart';
 import 'package:linkaform_access_control/core/router/app_router_provider.dart';
-import 'package:linkaform_access_control/features/home/presentation/screens/home_screen.dart';
-import 'package:linkaform_access_control/features/login/login_screen.dart';
-import 'package:login_module/login/presentation/providers/login_provider.dart';
+import 'package:linkaform_access_control/core/services/shared_preferences_service.dart';
+import 'package:linkaform_access_control/features/login/presentation/screens/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ui_look_and_feel_module/ui_look_and_feel_module.dart';
 
 Future<void> main() async {
   await initializeApp();
+  final sharedPreferences = await SharedPreferences.getInstance();
   runApp(
-    const ProviderScope(
-      child: MyApp(),
+    ProviderScope(
+      overrides: [
+        sharedPreferencesProvider.overrideWithValue(sharedPreferences),
+      ],
+      child: const MyApp(),
     ),
   );
 }
@@ -28,12 +32,10 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final goRouter = ref.watch(appRouterProvider);
-    final loginState = ref.watch(loginNotifierProvider);
 
     return MaterialAppContainer(
       router: goRouter,
-      baseWidget:
-          loginState.loginSuccess ? const HomeScreen() : const LoginScreen(),
+      baseWidget: const LoginScreen(),
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,6 +14,14 @@ abstract class ApiCalls {
   ///  This method are the base for ***retrieve*** data from data-rest.
   Future<Either<String, dynamic>> get(
     String url, {
+    Map<String, String>? headers,
+  });
+
+
+
+  Future<Either<String, dynamic>> post(
+    String url,
+    Map<String, dynamic> body, {
     Map<String, String>? headers,
   });
 }
@@ -38,11 +48,10 @@ final interceptorProvider = Provider.family<Interceptor, String>(
         ),
 );
 
-/// * This provider is the easy way to use client and his properties to consume the data.
 final dioClientProvider = Provider<Dio>(
   (ref) => Dio(
     BaseOptions(
-      baseUrl: '',
+      baseUrl: 'https://app.linkaform.com/api/infosync/',
       headers: {},
     ),
   )..interceptors.add(
@@ -52,7 +61,6 @@ final dioClientProvider = Provider<Dio>(
     ),
 );
 
-/// * This provider is the easy way to use the apiCalls methods using dio and this class.
 final apiCallProvider = Provider<ApiCalls>(
   (ref) => ApiCallImpl(
     dioClient: ref.read(dioClientProvider),
@@ -61,19 +69,45 @@ final apiCallProvider = Provider<ApiCalls>(
 
 class ApiCallImpl extends ApiCalls {
   final Dio dioClient;
+
   ApiCallImpl({required this.dioClient});
+
   @override
   Future<Either<String, dynamic>> get(String url,
       {Map<String, String>? headers}) async {
     try {
       /// TODO: Replace this implementation for the original api implementation.
-      //final response = await dioClient.get(url);
-      //return response.data != null ? Right(response) : Right('');
-      return Right('Success');
+      final response = await dioClient.get(url);
+      return response.data != null ? Right(response) : Right('');
     } catch (error) {
       return error is DioException
           ? Left('${error.message as DioException}')
           : Left('${error.toString()}');
     }
   }
+
+  @override
+  Future<Either<String, dynamic>> post(
+    String url,
+    Map<String, dynamic> body, {
+    Map<String, String>? headers,
+  }) async {
+    try {
+      final response = await dioClient.post(url,
+          data: body, options: Options(headers: headers));
+      response.headers.add('password', body['password']);
+      final data = jsonEncode(response.data);
+      final headersRes = jsonEncode(response.headers.map);
+      final json = jsonEncode({
+        'response': data,
+        'headers': headersRes,
+      });
+      return Right(json);
+    } catch (error) {
+      return error is DioException
+          ? Left('${error.message as DioException}')
+          : Left('${error.toString()}');
+    }
+  }
+
 }
